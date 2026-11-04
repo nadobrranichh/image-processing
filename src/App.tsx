@@ -3,7 +3,7 @@ import ResultDisplay from "./components/ResultDisplay";
 import FileUpload from "./components/FileUpload";
 import ProgressBox from "./components/ProgressBox";
 import useImageStore from "./store/useImageStore";
-import { randomParameters } from "./training-gen/shapes";
+import { randomParameters } from "./training-gen/drawing";
 import { type Parameters } from "./training-gen";
 
 function App() {

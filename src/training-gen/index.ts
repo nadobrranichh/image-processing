@@ -10,6 +10,8 @@ export const SHAPES = [
   "star",
 ] as const;
 
+export const rnd = (a: number, b: number) => a + Math.random() * (b - a);
+
 export type Shape = (typeof SHAPES)[number];
 
 export interface Parameters {

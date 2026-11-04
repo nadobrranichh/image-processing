@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import useImageStore from "../store/useImageStore";
 import {
-  highlight,
   loadModel,
   predictDefects,
   trainRecognizerAndUse,
-} from "../training-gen/shapes";
+} from "../training-gen/network";
 import { N } from "../training-gen";
 import { useProgressStore } from "../store/useProgressStore";
+import { highlight } from "../training-gen/drawing";
 
 export default function ProgressBox() {
   const {
@@ -75,7 +75,7 @@ export default function ProgressBox() {
         </div>
       </div>
       <div className="flex justify-between mb-2">
-        <p className="text-sm text-black">ENTER STATUS</p>
+        <p className="text-sm text-black">Progress</p>
         <p className="text-sm font-mono">{percentage} %</p>
       </div>
       <div

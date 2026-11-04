@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { type Cell } from "../training-gen";
-import { highlightCellInRegion } from "../training-gen/shapes";
+import { highlightCellInRegion } from "../training-gen/drawing";
 
 export default function Defect({
   analyzedCanvas,

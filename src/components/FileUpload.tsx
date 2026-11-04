@@ -1,6 +1,7 @@
 import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
 import { N, SHAPES, type Parameters } from "../training-gen";
-import { drawShape, randomHoles, rnd } from "../training-gen/shapes";
+import { rnd } from "../training-gen/";
+import { drawShape, randomHoles } from "../training-gen/drawing";
 
 const MAX_BYTES = 2 * 1024 * 1024; // 2 MB
 const ACCEPTED_TYPES = ["image/bmp", "image/jpeg", "image/png"];
