@@ -115,9 +115,17 @@ export function downloadModel(
 export async function loadModel(
   onTrainProgress?: (fraction: number) => void,
 ): Promise<NeuralNetwork<INeuralNetworkData, INeuralNetworkData>> {
-  const res = await fetch("src/models/defect-model-light.json");
-  const net = new NeuralNetwork({ hiddenLayers: [128, 64] });
-  net.fromJSON(await res.json());
+  let net;
+
+  try {
+    const res = await fetch("src/models/defect-model-light.json");
+    const data = await res.json();
+    net = new NeuralNetwork({ hiddenLayers: [128, 64] });
+    net.fromJSON(data);
+  } catch (error) {
+    net = await trainRecognizerAndUse(onTrainProgress);
+  }
+
   onTrainProgress?.(100);
   return net;
 }
