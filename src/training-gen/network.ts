@@ -139,23 +139,42 @@ export async function trainRecognizerAndUse(
   return net;
 }
 
-export async function predictDefects(
-  referenceCanvas: HTMLCanvasElement,
-  analyzeCanvas: HTMLCanvasElement,
-  net?: NeuralNetwork<INeuralNetworkData, INeuralNetworkData>,
+interface PredictArgs {
+  referenceCanvas: HTMLCanvasElement;
+  analyzeCanvas: HTMLCanvasElement;
+  net?: NeuralNetwork<INeuralNetworkData, INeuralNetworkData>;
+  threshold?: number;
+  track?: boolean;
+}
+
+export async function predictDefects({
+  referenceCanvas,
+  analyzeCanvas,
+  net,
   threshold = 0.75,
-) {
+  track,
+}: PredictArgs) {
   if (!net) net = await loadModel();
+
+  const times = { before: 0, after: 0 };
+
   const referenceFeatures = toFeatures(referenceCanvas);
   const analyzeFeatures = toFeatures(analyzeCanvas);
   const diff = referenceFeatures.map((v, i) => v - analyzeFeatures[i]);
-  const out = net.run(diff) as ArrayLike<number>;
 
+  if (track) times.before = performance.now();
+  const out = net.run(diff) as ArrayLike<number>;
   const cells: Cell[] = [];
   for (let i = 0; i < GRID * GRID; i++) {
     if (out[i] > threshold)
       cells.push({ x: i % GRID, y: Math.floor(i / GRID), diff: out[i] });
   }
+  if (track) times.after = performance.now();
 
-  return cells;
+  return {
+    cells,
+    ...(track && {
+      predictionTime: times.after - times.before,
+    }),
+  };
 }
