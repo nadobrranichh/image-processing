@@ -1,10 +1,8 @@
 import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
-import { N, SHAPES, type Parameters } from "../training-gen";
+import { SHAPES, type Parameters } from "../training-gen";
 import { rnd } from "../training-gen/";
 import { drawShape, randomHoles } from "../training-gen/drawing";
-
-const MAX_BYTES = 2 * 1024 * 1024; // 2 MB
-const ACCEPTED_TYPES = ["image/bmp", "image/jpeg", "image/png"];
+import { handleFile } from "../util";
 
 export default function FileUpload({
   title,
@@ -22,41 +20,17 @@ export default function FileUpload({
   const inputRef = useRef<HTMLInputElement>(null);
   const isAnalyze = title.includes("analyze");
 
-  const handleFile = async (candidate: File | null | undefined) => {
-    if (!candidate) return;
-
-    if (!ACCEPTED_TYPES.includes(candidate.type)) {
-      setError("Unsupported format — use BMP, JPG or PNG.");
-      setCanvas(null);
-      return;
-    }
-    if (candidate.size > MAX_BYTES) {
-      setError("File is too large — 2 MB max.");
-      setCanvas(null);
-      return;
-    }
-
-    setError(null);
-    const cv = document.createElement("canvas");
-    cv.width = cv.height = N;
-    const ctx = cv.getContext("2d", { willReadFrequently: true })!;
-    const image: ImageBitmap = await createImageBitmap(candidate);
-    ctx.drawImage(image, 0, 0, N, N);
-
-    setCanvas(cv);
-  };
-
   const openBrowser = () => inputRef.current?.click();
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
-    if (f) handleFile(f);
+    if (f) handleFile({ candidate: f, setCanvas, setError });
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const f = e.dataTransfer.files?.[0];
-    if (f) handleFile(f);
+    if (f) handleFile({ candidate: f, setCanvas, setError });
   };
 
   return (
