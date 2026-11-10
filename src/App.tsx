@@ -45,7 +45,7 @@ function App() {
         <button
           onClick={submit}
           disabled={!referenceCanvas || !analyzeCanvas}
-          className={`w-full cursor-pointer text-white py-4 rounded-2xl text-xl font-bold ${!referenceCanvas || !analyzeCanvas ? "bg-slate-500" : "bg-slate-900"}`}
+          className={`w-full cursor-pointer text-white py-4 rounded-2xl text-xl font-bold ${!referenceCanvas || !analyzeCanvas ? "bg-slate-500" : "bg-slate-900"} hover:scale-105 active:scale-95 transition-all disabled:bg-slate-600 disabled:hover:scale-100 disabled:active:scale-100`}
         >
           Submit
         </button>

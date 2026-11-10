@@ -11,7 +11,7 @@ export default function ResultDisplay({
     useImageStore((state) => state);
 
   return (
-    <div className="w-full border border-gray-300 rounded-2xl p-5 shadow-xl bg-white">
+    <div className="w-full border border-gray-300 rounded-2xl p-5 mb-8 shadow-xl bg-white">
       <div className="flex items-center justify-between mb-5">
         <p className="font-semibold">Found defects</p>
         <span className="rounded-full border border-gray-300 bg-gray-200 px-2.5 font-mono text-[11px] ">
