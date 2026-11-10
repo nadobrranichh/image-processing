@@ -5,6 +5,7 @@ import ProgressBox from "./components/ProgressBox";
 import useImageStore from "./store/useImageStore";
 import { randomParameters } from "./training-gen/drawing";
 import { type Parameters } from "./training-gen";
+import Benchmark from "./components/Benchmark";
 
 function App() {
   const {
@@ -56,6 +57,7 @@ function App() {
       </div>
       <ProgressBox />
       {analyzeCanvas && <ResultDisplay analyzedCanvas={analyzeCanvas} />}
+      <Benchmark />
     </main>
   );
 }
