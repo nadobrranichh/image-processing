@@ -46,7 +46,12 @@ export default function ProgressBox() {
       net = await loadModel(setTraining);
     } else net = await trainRecognizerAndUse(setTraining, setPreparation);
 
-    const cells = await predictDefects(referenceCanvas!, analyzeCanvas!, net);
+    if (!referenceCanvas || !analyzeCanvas) return;
+    const { cells } = await predictDefects({
+      referenceCanvas,
+      analyzeCanvas,
+      net,
+    });
     setFinding(100);
     setDefects(cells.toSorted((a, b) => b.diff! - a.diff!));
     const defectsView = document.createElement("canvas");
